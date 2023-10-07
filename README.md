@@ -1,3 +1,2 @@
 # lap01
-HTML, CSS, JS, PHP 
-Font-End
+HTML, CSS, JS
