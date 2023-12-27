@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập JavaScript về nhà 3</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #result-container {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+
+        h1 {
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #28a745;
+            margin: 8px;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            display: inline-block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="result-container">
+    <h1 class="animate__animated animate__bounce">Kết quả tính giá trị ln(1-x)</h1>
+
+    <script>
+        function tinhGiaTriLn(x, n) {
+            let ketQua = 0;
+            for (let i = 1; i <= n; i++) {
+                ketQua += Math.pow(-1, i + 1) * Math.pow(x, i) / i;
+            }
+            return ketQua;
+        }
+
+        function inChiTietGiaTriLn() {
+            const batDau = -1;
+            const ketThuc = 1;
+            const buoc = 0.1;
+            const soLuongGiaTri = 10;
+
+            for (let x = batDau; x <= ketThuc; x += buoc) {
+                const giaTriLn = tinhGiaTriLn(x, soLuongGiaTri);
+                document.write(`<p class="animate__animated animate__fadeIn">x = ${x.toFixed(1)}, ln(1-x) = ${giaTriLn.toFixed(16)}</p>`);
+            }
+        }
+
+        inChiTietGiaTriLn();
+    </script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Thanh Linh">
+    <title>Bài tập JavaScript về nhà 9</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            color: #007bff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #result {
+            animation: fadeIn 1s ease;
+        }
+
+        .warning {
+            color: #dc3545;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chương trình tính \( \frac{\sin x}{x} \)</h1>
+    <label for="inputX">Nhập giá trị x: </label>
+    <input type="number" id="inputX" placeholder="Nhập giá trị x" required>
+    <button onclick="calculateSinX()">Tính toán</button>
+
+    <div id="result"></div>
+    <div id="warning" class="warning"></div>
+
+    <script>
+        function calculateSinX() {
+            const x = parseFloat(document.getElementById('inputX').value);
+
+            if (isNaN(x)) {
+                document.getElementById('warning').innerHTML = 'Vui lòng nhập một giá trị số.';
+                return;
+            } else {
+                document.getElementById('warning').innerHTML = '';
+            }
+
+            const result = computeSinX(x);
+            displayResult(result);
+        }
+
+        function computeSinX(x) {
+            let result = 1;
+            let term = x;
+
+            for (let n = 2; n <= 10; n += 2) {
+                term *= (x * x * (-1)) / ((n + 1) * (n + 2));
+                result += term / ((n + 1) * (n + 2));
+            }
+
+            return result;
+        }
+
+        function displayResult(result) {
+            const resultElement = document.getElementById('result');
+            resultElement.innerHTML = `sin x / x = ${result.toFixed(6)}`;
+        }
+    </script>
+</body>
+</html>

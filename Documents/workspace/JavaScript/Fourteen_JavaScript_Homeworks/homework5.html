@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập JavaScript về nhà 5</title>
+    <script async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #calculator {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        #result {
+            color: #009688;
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="calculator">
+        <h2>Tính giá trị của \( \frac{1}{\sqrt{1+x}} \)</h2>
+        <label for="inputX">Nhập giá trị x:</label>
+        <input type="number" id="inputX" step="0.01">
+        <button onclick="calculate()">Tính</button>
+        <p id="error-message"></p>
+        <p id="result"></p>
+
+        <script>
+            function calculate() {
+                const inputX = parseFloat(document.getElementById("inputX").value);
+                const errorMessageElement = document.getElementById("error-message");
+                const resultElement = document.getElementById("result");
+
+                try {
+                    if (isNaN(inputX) || inputX <= -1 || inputX >= 1) {
+                        throw new Error("Vui lòng nhập một giá trị x hợp lệ trong khoảng (-1, 1).");
+                    }
+
+                    const result = calculateExpression(inputX);
+                    if (isNaN(result)) {
+                        throw new Error("Đã xảy ra lỗi tính toán. Vui lòng kiểm tra lại giá trị đầu vào.");
+                    }
+
+                    errorMessageElement.innerHTML = "";
+                    resultElement.innerHTML = `Kết quả: 1/sqrt(1+${inputX}) = ${result.toFixed(16)}\)`;
+                    MathJax.typeset(); // Tích hợp MathJax để hiển thị ký hiệu LaTeX
+                } catch (error) {
+                    errorMessageElement.innerHTML = error.message;
+                    resultElement.innerHTML = "";
+                }
+            }
+
+            function calculateExpression(x) {
+                if (isNaN(x) || x <= -1 || x >= 1) {
+                    throw new Error("Giá trị x không hợp lệ.");
+                }
+
+                let result = 1 / Math.sqrt(1 + x);
+                let term = x;
+                let sign = -1;
+
+                for (let i = 2; i <= 10**8; i += 2) {
+                    term *= (i - 1) * (i - 1 + x) / (i * (i + 1));
+                    result += sign * term;
+                    sign = -sign;
+                }
+
+                return result;
+            }
+        </script>
+    </div>
+</body>
+
+</html>

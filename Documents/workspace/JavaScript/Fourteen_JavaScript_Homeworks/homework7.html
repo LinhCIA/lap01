@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Thanh Linh">
+    <title>Bài tập JavaScript về nhà 7</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #calculator {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="calculator">
+        <h2>Tính giá trị của cos(x)</h2>
+        <label for="inputX">Nhập giá trị x:</label>
+        <input type="number" id="inputX">
+        <button onclick="calculate()">Tính</button>
+        <p id="error-message" style="color: red;">Bắt đầu thôi nào Bro ơi 🤗</p>
+        <p id="result"></p>
+
+        <script>
+            function calculate() {
+                const inputX = parseFloat(document.getElementById("inputX").value);
+                const errorMessageElement = document.getElementById("error-message");
+                const resultElement = document.getElementById("result");
+
+                try {
+                    if (isNaN(inputX)) {
+                        throw new Error("Vui lòng nhập một giá trị số thuộc khoảng (−∞, +∞).");
+                    }
+
+                    const result = calculateCos(inputX);
+
+                    if (isNaN(result)) {
+                        throw new Error("Có lỗi khi tính toán.");
+                    }
+
+                    errorMessageElement.innerHTML = "";
+                    resultElement.innerHTML = `cos(${inputX}) = ${result.toFixed(4)}`;
+                } catch (error) {
+                    errorMessageElement.innerHTML = error.message;
+                    resultElement.innerHTML = "";
+                }
+            }
+
+            function calculateCos(x) {
+                let result = 1;
+                let term = 1;
+                let sign = -1;
+
+                for (let i = 2; i <= 15; i += 2) {
+                    term *= (x * x) / (i * (i - 1));
+                    result += sign * term;
+                    sign *= -1;
+                }
+
+                return result;
+            }
+        </script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài tập JavaScript về nhà 12</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chuỗi Taylor - ln(1+x/1-x)</h1>
+
+  <label for="inputX">Nhập giá trị x (-1 &lt; x &lt; 1):</label>
+  <input type="number" id="inputX" step="any">
+  <button onclick="calculate()">Tính toán</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculate() {
+      // Lấy giá trị nhập từ người dùng
+      var x = parseFloat(document.getElementById('inputX').value);
+
+      // Kiểm tra xem giá trị x có hợp lệ không
+      if (isNaN(x) || x <= -1 || x >= 1) {
+        alert("Vui lòng nhập giá trị x hợp lệ (-1 < x < 1).");
+        return;
+      }
+
+      // Tính chuỗi Taylor
+      var result = 0;
+      for (var n = 0; n < 1e-10; n++) {
+        result += (Math.pow(x, 2 * n + 1) / (2 * n + 1));
+      }
+
+      // Hiển thị kết quả ở dạng LaTex
+      var latexResult = `ln[(1+${x})/(1-${x})] = ${result.toFixed(16)}`;
+
+      // Hiển thị kết quả trên trang web
+      document.getElementById('result').innerHTML = latexResult;
+    }
+  </script>
+</body>
+</html>

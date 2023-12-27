@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Thanh Linh">
+    <title>Bài tập JavaScript về nhà 6</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #calculator {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="calculator">
+        <h2>Tính giá trị của sin(x)</h2>
+        <label for="inputX">Nhập giá trị x:</label>
+        <input type="text" id="inputX" oninput="validateInput()">
+        <button onclick="calculate()">Tính</button>
+        <p id="error-message" style="color: red;">Bắt đầu nào Bro ơi 🫡</p>
+        <p id="result"></p>
+
+        <script>
+            function validateInput() {
+                const inputX = document.getElementById("inputX").value;
+                const errorMessageElement = document.getElementById("error-message");
+
+                if (!isNumber(inputX)) {
+                    errorMessageElement.innerHTML = "Vui lòng nhập một giá trị số thuộc khoảng (−∞, +∞).";
+                } else {
+                    errorMessageElement.innerHTML = "";
+                }
+            }
+
+            function isNumber(value) {
+                return !isNaN(parseFloat(value)) && isFinite(value);
+            }
+
+            function calculate() {
+                const inputX = document.getElementById("inputX").value;
+                const errorMessageElement = document.getElementById("error-message");
+
+                if (!isNumber(inputX)) {
+                    errorMessageElement.innerHTML = "Vui lòng nhập một giá trị số.";
+                    return;
+                } else {
+                    errorMessageElement.innerHTML = "";
+                }
+
+                const x = parseFloat(inputX);
+                const result = calculateSin(x);
+                document.getElementById("result").innerHTML = `sin(${x}) = ${result}`;
+            }
+
+            function calculateSin(x) {
+                let result = 0;
+                let term = x;
+                let sign = -1;
+
+                for (let i = 3; i <= 10**10; i += 2) {
+                    term *= (x * x) / (i * (i - 1));
+                    result += sign * term;
+                    sign *= -1;
+                }
+
+                return result;
+            }
+        </script>
+    </div>
+</body>
+</html>
